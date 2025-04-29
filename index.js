@@ -847,7 +847,7 @@ async function autoSwapEthBtc(totalSwaps) {
         if (!transactionRunning) break;
       }
     }
-    addLog("0GSwap: Semua swap BTC ke ETH selesai.", "success");
+    addLog("0GSwap: Semua swap ETH ke BTC selesai.", "success");
   } catch (error) {
     addLog("0GSwap: Error autoSwapEthBtc: " + error.message, "error");
   } finally {
