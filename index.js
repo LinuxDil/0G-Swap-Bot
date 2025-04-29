@@ -218,7 +218,7 @@ const headerBox = blessed.box({
   tags: true,
   style: { fg: "white" }
 });
-figlet.text("NT EXHAUST", { font: "Speed", horizontalLayout: "default" }, (err, data) => {
+figlet.text("Airdrop Seeker", { font: "Speed", horizontalLayout: "default" }, (err, data) => {
   if (err) headerBox.setContent("{center}{bold}Airdrop Seeker{/bold}{/center}");
   else headerBox.setContent(`{center}{bold}{green-fg}${data}{/green-fg}{/bold}{/center}`);
   screen.render();
@@ -227,7 +227,7 @@ figlet.text("NT EXHAUST", { font: "Speed", horizontalLayout: "default" }, (err, 
 const descriptionBox = blessed.box({
   left: "center",
   width: "100%",
-  content: "{center}{bold}{bright-red-fg}                               « ✮ 0G Network Auto Swap Via Zer0 ✮ »{/bright-red-fg}{/bold}{/center}",
+  content: "{center}{bold}{bright-red-fg}                      « ✮ 0G Network Auto Swap Via Zer0 ✮ »{/bright-red-fg}{/bold}{/center}",
   tags: true,
   style: { fg: "white", bg: "default" }
 });
