@@ -1,7 +1,7 @@
 {
   "name": "0G LABS AUTO SWAP",
   "version": "1.0.0",
-  "description": "NT EXHAUST",
+  "description": "This script was created by the team from NT Exhaust; I only refined it.",
   "type": "module",
   "main": "index.js",
   "scripts": {
