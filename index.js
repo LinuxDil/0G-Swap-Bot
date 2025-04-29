@@ -444,7 +444,7 @@ async function approveToken(tokenAddress, tokenAbi, amount, decimals) {
     throw error;
   }
 }
-
+// fungsi auto swap
 async function swapAuto(direction, amountIn) {
   try {
     const swapContract = new ethers.Contract(ROUTER_ADDRESS, CONTRACT_ABI, wallet);
@@ -714,7 +714,7 @@ async function autoSwapBtcEth(totalSwaps) {
     stopTransaction();
   }
 }
-// fungsi auto swap ueth ke usdt
+// fungsi auto swap eth ke usdt
 async function autoSwapEthUsdt(totalSwaps) {
   try {
     for (let i = 1; i <= totalSwaps; i++) {
@@ -723,7 +723,7 @@ async function autoSwapEthUsdt(totalSwaps) {
       }
       if (i % 2 === 1) {
         try {
-          const randomEth = (Math.random() * (0.3 - 0.1) + 0.1).toFixed(6);
+          const randomEth = (Math.random() * (0.3 - 0.1) + 0.1).toFixed(2);
           const ethAmount = ethers.parseUnits(randomEth, 18);
           const ethContract = new ethers.Contract(ETH_ADDRESS, ETH_ABI, provider);
           const currentEthBalance = await ethContract.balanceOf(wallet.address);
