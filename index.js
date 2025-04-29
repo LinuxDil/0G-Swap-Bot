@@ -286,7 +286,7 @@ async function updateGasPriceBox() {
     const content =
       ` Gas Normal : {bright-green-fg}${gasNormalStr}{/bright-green-fg} Gwei      {bright-yellow-fg} ➥ {/bright-yellow-fg}     Estimasi Fee : {bright-red-fg}${feeNormalStr}{/bright-red-fg} AOGI\n` +
       ` Gas Rendah : {bright-green-fg}${gasRendahStr}{/bright-green-fg} Gwei      {bright-yellow-fg} ➥ {/bright-yellow-fg}     Estimasi Fee : {bright-red-fg}${feeRendahStr}{/bright-red-fg} AOGI\n` +
-      ` Gas Fee x2 : {bright-green-fg}${gasX2Str}{/bright-green-fg} Gwei       {bright-yellow-fg} ➥ {/bright-yellow-fg}     Estimasi Fee : {bright-red-fg}${feeX2Str}{/bright-red-fg} AOGI`;
+      ` Gas Fee x2 : {bright-green-fg}${gasX2Str}{/bright-green-fg} Gwei      {bright-yellow-fg} ➥ {/bright-yellow-fg}     Estimasi Fee : {bright-red-fg}${feeX2Str}{/bright-red-fg} AOGI`;
     gasPriceBox.setContent(content);
     screen.render();
   } catch (error) {
