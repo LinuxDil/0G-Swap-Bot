@@ -854,13 +854,13 @@ function startTransactionProcess(pair, totalSwaps) {
     updateMainMenuItems();
     update0gSwapSubMenuItems();
     addLog(`Memulai ${pair} sebanyak ${totalSwaps} kali...`, "progress");
-    if (pair === "USDT & ETH") {
+    if (pair === "USDT ke ETH") {
       autoSwapUsdtEth(totalSwaps);
-    } else if (pair === "USDT & BTC") {
+    } else if (pair === "USDT ke BTC") {
       autoSwapUsdtBtc(totalSwaps);
-    } else if (pair === "BTC & ETH") {
+    } else if (pair === "BTC ke ETH") {
       autoSwapBtcEth(totalSwaps);
-    } else if (pair === "ETH & USDT") {
+    } else if (pair === "ETH ke USDT") {
       autoSwapBtcEth(totalSwaps);
     } else {
       addLog(`Logika swap untuk pasangan ${pair} belum diimplementasikan.`, "error");
@@ -1031,7 +1031,7 @@ autoSwapSubMenu.on("select", (item) => {
   } 
 // Swap ETH ke USDT
     else if (selected.startsWith("Auto Swap ETH -> USDT")) {
-    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (ETH & USDT){/bright-blue-fg}");
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (ETH ke USDT){/bright-blue-fg}");
     promptBox.setFront();
     promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
       promptBox.hide();
