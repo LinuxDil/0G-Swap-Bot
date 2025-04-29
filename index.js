@@ -1141,8 +1141,8 @@ autoSwapSubMenu.on("select", (item) => {
       }
       startTransactionProcess("USDT ke ETH", totalSwaps);
     });
-  } else if (selected.startsWith("Auto Swap USDT & BTC")) {
-    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (USDT & BTC){/bright-blue-fg}");
+  } else if (selected.startsWith("Auto Swap USDT ke BTC")) {
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (USDT ke BTC){/bright-blue-fg}");
     promptBox.setFront();
     promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
       promptBox.hide();
