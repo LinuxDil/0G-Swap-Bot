@@ -758,26 +758,8 @@ async function autoSwapEthUsdt(totalSwaps) {
         } catch (error) {
           addLog("0G: Swap ETH ➯ USDT error: " + error.message, "error");
         }
-      } else {
-        // USDT ➝ ETH
-        try {
-          const randomUsdt = (Math.random() * (300 - 100) + 100).toFixed(2);
-          const usdtAmount = ethers.parseUnits(randomUsdt, 18);
-          const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, provider);
-          const currentUsdtBalance = await usdtContract.balanceOf(wallet.address);
-          if (currentUsdtBalance < usdtAmount) {
-            addLog(`0G: Saldo USDT (${ethers.formatUnits(currentUsdtBalance, 18)}) tidak cukup untuk swap USDT->ETH`, "error");
-          } else {
-            await addTransactionToQueue(async (nonce) => {
-              await approveToken(USDT_ADDRESS, USDT_ABI, usdtAmount, 18);
-              await swapAuto("usdtToEth", usdtAmount);
-              await updateWalletData();
-            }, `USDT ➯ ETH, ${randomUsdt} USDT`);
-          }
-        } catch (error) {
-          addLog("0G: Swap USDT ➯ ETH error: " + error.message, "error");
-        }
       }
+        // USDT ➝ ETH
       addLog(`0GSwap: Swap ke-${i} selesai.`, "0g");
       if (i < totalSwaps) {
         const delaySeconds = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
