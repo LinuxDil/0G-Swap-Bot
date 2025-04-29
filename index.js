@@ -1011,7 +1011,7 @@ function startTransactionProcess(pair, totalSwaps) {
     addLog(`Memulai ${pair} sebanyak ${totalSwaps} kali...`, "progress");
     if (pair === "USDT ke ETH") {
       autoSwapUsdtEth(totalSwaps);
-    } else if (pair === "USDT & BTC") {
+    } else if (pair === "USDT ke BTC") {
       autoSwapUsdtBtc(totalSwaps);
     } else if (pair === "BTC & ETH") {
       autoSwapBtcEth(totalSwaps);
