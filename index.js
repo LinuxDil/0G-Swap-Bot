@@ -314,7 +314,10 @@ const mainMenu = blessed.list({
 });
 
 function update0gSwapSubMenuItems() {
-  const items = ["Auto Swap USDT ke ETH", "Auto Swap USDT & BTC", "Auto Swap BTC & ETH", "Clear Transaction Logs", "Back To Main Menu", "Exit"];
+  const items = ["Auto Swap USDT ke ETH", "Auto Swap USDT & BTC", "Auto Swap BTC & ETH",  "Auto Swap ETH ke USDT",
+  "Auto Swap BTC ke USDT",
+  "Auto Swap ETH ke BTC",
+  "Clear Transaction Logs", "Back To Main Menu", "Exit"];
   if (transactionRunning) items.unshift("Stop Transaction");
   autoSwapSubMenu.setItems(items);
   screen.render();
@@ -444,14 +447,14 @@ async function approveToken(tokenAddress, tokenAbi, amount, decimals) {
     throw error;
   }
 }
-
+// fungsi swap general
 async function swapAuto(direction, amountIn) {
   try {
     const swapContract = new ethers.Contract(ROUTER_ADDRESS, CONTRACT_ABI, wallet);
     let params;
     const deadline = Math.floor(Date.now() / 1000) + 120;
     if (direction === "usdtToEth") {
-      addLog(`0G: Memulai Swap USDT ➯ ETH Demgam amount: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
+      addLog(`0G: Memulai Swap USDT ➯ ETH Dengan jumlah: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
       params = {
         tokenIn: USDT_ADDRESS,
         tokenOut: ETH_ADDRESS,
@@ -731,7 +734,186 @@ async function autoSwapBtcEth(totalSwaps) {
     stopTransaction();
   }
 }
+// fungsi
+async function autoSwapEthUsdt(totalSwaps) {
+  try {
+    for (let i = 1; i <= totalSwaps; i++) {
+      if (!transactionRunning) return;
+      if (i % 2 === 1) {
+        // ETH ➝ USDT
+        try {
+          const randomEth = (Math.random() * (0.3 - 0.1) + 0.1).toFixed(6);
+          const ethAmount = ethers.parseUnits(randomEth, 18);
+          const ethContract = new ethers.Contract(ETH_ADDRESS, ETH_ABI, provider);
+          const currentEthBalance = await ethContract.balanceOf(wallet.address);
+          if (currentEthBalance < ethAmount) {
+            addLog(`0G: Saldo ETH (${ethers.formatUnits(currentEthBalance, 18)}) tidak cukup untuk swap ETH->USDT`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(ETH_ADDRESS, ETH_ABI, ethAmount, 18);
+              await swapAuto("ethToUsdt", ethAmount);
+              await updateWalletData();
+            }, `ETH ➯ USDT, ${randomEth} ETH`);
+          }
+        } catch (error) {
+          addLog("0G: Swap ETH ➯ USDT error: " + error.message, "error");
+        }
+      } else {
+        // USDT ➝ ETH
+        try {
+          const randomUsdt = (Math.random() * (300 - 100) + 100).toFixed(2);
+          const usdtAmount = ethers.parseUnits(randomUsdt, 18);
+          const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, provider);
+          const currentUsdtBalance = await usdtContract.balanceOf(wallet.address);
+          if (currentUsdtBalance < usdtAmount) {
+            addLog(`0G: Saldo USDT (${ethers.formatUnits(currentUsdtBalance, 18)}) tidak cukup untuk swap USDT->ETH`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(USDT_ADDRESS, USDT_ABI, usdtAmount, 18);
+              await swapAuto("usdtToEth", usdtAmount);
+              await updateWalletData();
+            }, `USDT ➯ ETH, ${randomUsdt} USDT`);
+          }
+        } catch (error) {
+          addLog("0G: Swap USDT ➯ ETH error: " + error.message, "error");
+        }
+      }
+      addLog(`0GSwap: Swap ke-${i} selesai.`, "0g");
+      if (i < totalSwaps) {
+        const delaySeconds = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+        addLog(`0GSwap: Menunggu ${delaySeconds} detik sebelum swap berikutnya...`, "0g");
+        await interruptibleDelay(delaySeconds * 1000);
+        if (!transactionRunning) break;
+      }
+    }
+    addLog("0GSwap: Semua swap ETH & USDT selesai.", "success");
+  } catch (error) {
+    addLog("0GSwap: Error autoSwapEthUsdt: " + error.message, "error");
+  } finally {
+    stopTransaction();
+  }
+}
+// btc usdt
+async function autoSwapBtcUsdt(totalSwaps) {
+  try {
+    for (let i = 1; i <= totalSwaps; i++) {
+      if (!transactionRunning) return;
+      if (i % 2 === 1) {
+        // BTC ➝ USDT
+        try {
+          const randomBtc = (Math.random() * (0.05 - 0.01) + 0.01).toFixed(6);
+          const btcAmount = ethers.parseUnits(randomBtc, 18);
+          const btcContract = new ethers.Contract(BTC_ADDRESS, BTC_ABI, provider);
+          const currentBtcBalance = await btcContract.balanceOf(wallet.address);
+          if (currentBtcBalance < btcAmount) {
+            addLog(`0G: Saldo BTC (${ethers.formatUnits(currentBtcBalance, 18)}) tidak cukup untuk swap BTC->USDT`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(BTC_ADDRESS, BTC_ABI, btcAmount, 18);
+              await swapAuto("btcToUsdt", btcAmount);
+              await updateWalletData();
+            }, `BTC ➯ USDT, ${randomBtc} BTC`);
+          }
+        } catch (error) {
+          addLog("0G: Swap BTC ➯ USDT error: " + error.message, "error");
+        }
+      } else {
+        // USDT ➝ BTC
+        try {
+          const randomUsdt = (Math.random() * (300 - 100) + 100).toFixed(2);
+          const usdtAmount = ethers.parseUnits(randomUsdt, 18);
+          const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, provider);
+          const currentUsdtBalance = await usdtContract.balanceOf(wallet.address);
+          if (currentUsdtBalance < usdtAmount) {
+            addLog(`0G: Saldo USDT (${ethers.formatUnits(currentUsdtBalance, 18)}) tidak cukup untuk swap USDT->BTC`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(USDT_ADDRESS, USDT_ABI, usdtAmount, 18);
+              await swapAuto("usdtToBtc", usdtAmount);
+              await updateWalletData();
+            }, `USDT ➯ BTC, ${randomUsdt} USDT`);
+          }
+        } catch (error) {
+          addLog("0G: Swap USDT ➯ BTC error: " + error.message, "error");
+        }
+      }
+      addLog(`0GSwap: Swap ke-${i} selesai.`, "0g");
+      if (i < totalSwaps) {
+        const delaySeconds = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+        addLog(`0GSwap: Menunggu ${delaySeconds} detik sebelum swap berikutnya...`, "0g");
+        await interruptibleDelay(delaySeconds * 1000);
+        if (!transactionRunning) break;
+      }
+    }
+    addLog("0GSwap: Semua swap BTC & USDT selesai.", "success");
+  } catch (error) {
+    addLog("0GSwap: Error autoSwapBtcUsdt: " + error.message, "error");
+  } finally {
+    stopTransaction();
+  }
+}
+// eth btc
+async function autoSwapEthBtc(totalSwaps) {
+  try {
+    for (let i = 1; i <= totalSwaps; i++) {
+      if (!transactionRunning) return;
+      if (i % 2 === 1) {
+        // ETH ➝ BTC
+        try {
+          const randomEth = (Math.random() * (0.3 - 0.1) + 0.1).toFixed(6);
+          const ethAmount = ethers.parseUnits(randomEth, 18);
+          const ethContract = new ethers.Contract(ETH_ADDRESS, ETH_ABI, provider);
+          const currentEthBalance = await ethContract.balanceOf(wallet.address);
+          if (currentEthBalance < ethAmount) {
+            addLog(`0G: Saldo ETH (${ethers.formatUnits(currentEthBalance, 18)}) tidak cukup untuk swap ETH->BTC`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(ETH_ADDRESS, ETH_ABI, ethAmount, 18);
+              await swapAuto("ethToBtc", ethAmount);
+              await updateWalletData();
+            }, `ETH ➯ BTC, ${randomEth} ETH`);
+          }
+        } catch (error) {
+          addLog("0G: Swap ETH ➯ BTC error: " + error.message, "error");
+        }
+      } else {
+        // BTC ➝ ETH
+        try {
+          const randomBtc = (Math.random() * (0.05 - 0.01) + 0.01).toFixed(6);
+          const btcAmount = ethers.parseUnits(randomBtc, 18);
+          const btcContract = new ethers.Contract(BTC_ADDRESS, BTC_ABI, provider);
+          const currentBtcBalance = await btcContract.balanceOf(wallet.address);
+          if (currentBtcBalance < btcAmount) {
+            addLog(`0G: Saldo BTC (${ethers.formatUnits(currentBtcBalance, 18)}) tidak cukup untuk swap BTC->ETH`, "error");
+          } else {
+            await addTransactionToQueue(async (nonce) => {
+              await approveToken(BTC_ADDRESS, BTC_ABI, btcAmount, 18);
+              await swapAuto("btcToEth", btcAmount);
+              await updateWalletData();
+            }, `BTC ➯ ETH, ${randomBtc} BTC`);
+          }
+        } catch (error) {
+          addLog("0G: Swap BTC ➯ ETH error: " + error.message, "error");
+        }
+      }
+      addLog(`0GSwap: Swap ke-${i} selesai.`, "0g");
+      if (i < totalSwaps) {
+        const delaySeconds = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+        addLog(`0GSwap: Menunggu ${delaySeconds} detik sebelum swap berikutnya...`, "0g");
+        await interruptibleDelay(delaySeconds * 1000);
+        if (!transactionRunning) break;
+      }
+    }
+    addLog("0GSwap: Semua swap ETH & BTC selesai.", "success");
+  } catch (error) {
+    addLog("0GSwap: Error autoSwapEthBtc: " + error.message, "error");
+  } finally {
+    stopTransaction();
+  }
+}
 
+
+// fungsi transaksi
 function addTransactionToQueue(transactionFunction, description = "Transaksi") {
   const transactionId = ++transactionIdCounter;
   transactionQueueList.push({
