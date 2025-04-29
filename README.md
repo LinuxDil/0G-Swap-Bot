@@ -8,4 +8,6 @@ Join our Channel for Run the Script, and more information about Airdrop
   </a>
 </div>
 
+---
+
 Big Thanks for NTE Team: VinzSenzoo
