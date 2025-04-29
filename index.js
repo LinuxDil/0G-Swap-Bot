@@ -466,7 +466,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "ethToUsdt") {
-      addLog(`0G: Memulai Swap ETH ➯ USDT Dengan amount: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
+      addLog(`0G: Memulai Swap ETH ➯ USDT Dengan jumlah: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
       params = {
         tokenIn: ETH_ADDRESS,
         tokenOut: USDT_ADDRESS,
@@ -1144,7 +1144,64 @@ autoSwapSubMenu.on("select", (item) => {
       startTransactionProcess("ETH ke USDT", totalSwaps);
     });
   }
-  
+  // form swap eth usdt           
+  else if (selected.startsWith("Auto Swap ETH ke USDT")) {
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (ETH ke USDT){/bright-blue-fg}");
+    promptBox.setFront();
+    promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
+      promptBox.hide();
+      screen.render();
+      if (err || !value) {
+        addLog("Input jumlah swap dibatalkan.", "system");
+        return;
+      }
+      const totalSwaps = parseInt(value);
+      if (isNaN(totalSwaps) || totalSwaps <= 0) {
+        addLog("Jumlah swap tidak valid. Masukkan angka > 0.", "error");
+        return;
+      }
+      startTransactionProcess("ETH ke USDT", totalSwaps);
+    });
+  }
+  // form swap btc usdt           
+  else if (selected.startsWith("Auto Swap BTC ke USDT")) {
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (BTC ke USDT){/bright-blue-fg}");
+    promptBox.setFront();
+    promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
+      promptBox.hide();
+      screen.render();
+      if (err || !value) {
+        addLog("Input jumlah swap dibatalkan.", "system");
+        return;
+      }
+      const totalSwaps = parseInt(value);
+      if (isNaN(totalSwaps) || totalSwaps <= 0) {
+        addLog("Jumlah swap tidak valid. Masukkan angka > 0.", "error");
+        return;
+      }
+      startTransactionProcess("BTC ke USDT", totalSwaps);
+    });
+  }
+  // form swap eth usdt           
+  else if (selected.startsWith("Auto Swap ETH ke BTC")) {
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (ETH ke BTC){/bright-blue-fg}");
+    promptBox.setFront();
+    promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
+      promptBox.hide();
+      screen.render();
+      if (err || !value) {
+        addLog("Input jumlah swap dibatalkan.", "system");
+        return;
+      }
+      const totalSwaps = parseInt(value);
+      if (isNaN(totalSwaps) || totalSwaps <= 0) {
+        addLog("Jumlah swap tidak valid. Masukkan angka > 0.", "error");
+        return;
+      }
+      startTransactionProcess("ETH ke BTC", totalSwaps);
+    });
+  }  
+
   // stop transaksi
   else if (selected === "Stop Transaction") {
     stopTransaction();
