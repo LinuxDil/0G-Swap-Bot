@@ -227,7 +227,7 @@ figlet.text("Airdrop Seeker", { font: "Speed", horizontalLayout: "default" }, (e
 const descriptionBox = blessed.box({
   left: "center",
   width: "100%",
-  content: "{center}{bold}{bright-red-fg}                      « ✮ 0G Network Auto Swap Via Zer0 ✮ »{/bright-red-fg}{/bold}{/center}",
+  content: "{center}{bold}{bright-red-fg}« ✮ 0G Network Auto Swap Via Zer0 ✮ »{/bright-red-fg}{/bold}{/center}",
   tags: true,
   style: { fg: "white", bg: "default" }
 });
