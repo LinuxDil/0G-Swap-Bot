@@ -1181,7 +1181,29 @@ autoSwapSubMenu.on("select", (item) => {
       }
       startTransactionProcess("BTC ke ETH", totalSwaps);
     });
-  } else if (selected === "Stop Transaction") {
+  } 
+// form swap eth usdt           
+  else if (selected.startsWith("Auto Swap ETH ke USDT")) {
+    promptBox.setLabel("{bright-blue-fg}Jumlah Swap (ETH ke USDT){/bright-blue-fg}");
+    promptBox.setFront();
+    promptBox.readInput("Masukkan jumlah swap:", "", async (err, value) => {
+      promptBox.hide();
+      screen.render();
+      if (err || !value) {
+        addLog("Input jumlah swap dibatalkan.", "system");
+        return;
+      }
+      const totalSwaps = parseInt(value);
+      if (isNaN(totalSwaps) || totalSwaps <= 0) {
+        addLog("Jumlah swap tidak valid. Masukkan angka > 0.", "error");
+        return;
+      }
+      startTransactionProcess("ETH ke USDT", totalSwaps);
+    });
+  }
+  
+  // stop transaksi
+  else if (selected === "Stop Transaction") {
     stopTransaction();
   } else if (selected === "Clear Transaction Logs") {
     logsBox.setContent("");
