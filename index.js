@@ -904,7 +904,7 @@ async function autoSwapEthBtc(totalSwaps) {
         if (!transactionRunning) break;
       }
     }
-    addLog("0GSwap: Semua swap ETH ke BTC selesai.", "success");
+    addLog("0GSwap: Semua swap BTC ke ETH selesai.", "success");
   } catch (error) {
     addLog("0GSwap: Error autoSwapEthBtc: " + error.message, "error");
   } finally {
@@ -1014,6 +1014,12 @@ function startTransactionProcess(pair, totalSwaps) {
     } else if (pair === "USDT ke BTC") {
       autoSwapUsdtBtc(totalSwaps);
     } else if (pair === "BTC ke ETH") {
+      autoSwapBtcEth(totalSwaps);
+    } else if (pair === "ETH ke USDT") {
+      autoSwapUsdtBtc(totalSwaps);
+    } else if (pair === "BTC ke USDT") {
+      autoSwapBtcEth(totalSwaps);
+    } else if (pair === "ETH ke BTC") {
       autoSwapBtcEth(totalSwaps);
     } else {
       addLog(`Logika swap untuk pasangan ${pair} belum diimplementasikan.`, "error");
