@@ -219,7 +219,7 @@ const headerBox = blessed.box({
   style: { fg: "white" }
 });
 figlet.text("NT EXHAUST", { font: "Speed", horizontalLayout: "default" }, (err, data) => {
-  if (err) headerBox.setContent("{center}{bold}NT EXHAUST{/bold}{/center}");
+  if (err) headerBox.setContent("{center}{bold}Airdrop Seeker{/bold}{/center}");
   else headerBox.setContent(`{center}{bold}{green-fg}${data}{/green-fg}{/bold}{/center}`);
   screen.render();
 });
@@ -227,7 +227,7 @@ figlet.text("NT EXHAUST", { font: "Speed", horizontalLayout: "default" }, (err, 
 const descriptionBox = blessed.box({
   left: "center",
   width: "100%",
-  content: "{center}{bold}{bright-yellow-fg}                               « ✮ 0̲̅G̲̅ L̲̅A̲̅B̲̅S̲̅ A̲̅U̲̅T̲̅O̲̅ S̲̅W̲̅A̲̅P̲̅ ✮ »{/bright-yellow-fg}{/bold}{/center}",
+  content: "{center}{bold}{bright-red-fg}                               « ✮ 0G Network Auto Swap Via Zer0 ✮ »{/bright-red-fg}{/bold}{/center}",
   tags: true,
   style: { fg: "white", bg: "default" }
 });
@@ -454,7 +454,7 @@ async function swapAuto(direction, amountIn) {
     let params;
     const deadline = Math.floor(Date.now() / 1000) + 120;
     if (direction === "usdtToEth") {
-      addLog(`0G: Memulai Swap USDT ➯ ETH Dengan jumlah: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
+      addLog(`0G: Memulai Swap USDT ➯ ETH Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
       params = {
         tokenIn: USDT_ADDRESS,
         tokenOut: ETH_ADDRESS,
@@ -466,7 +466,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "ethToUsdt") {
-      addLog(`0G: Memulai Swap ETH ➯ USDT Dengan jumlah: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
+      addLog(`0G: Memulai Swap ETH ➯ USDT Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
       params = {
         tokenIn: ETH_ADDRESS,
         tokenOut: USDT_ADDRESS,
@@ -478,7 +478,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "usdtToBtc") {
-      addLog(`0G: Memulai Swap USDT ➯ BTC Dengan amount: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
+      addLog(`0G: Memulai Swap USDT ➯ BTC Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} USDT`, "0g");
       params = {
         tokenIn: USDT_ADDRESS,
         tokenOut: BTC_ADDRESS,
@@ -490,7 +490,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "btcToUsdt") {
-      addLog(`0G: Memulai Swap BTC ➯ USDT Dengan amount: ${ethers.formatUnits(amountIn, 18)} BTC`, "0g");
+      addLog(`0G: Memulai Swap BTC ➯ USDT Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} BTC`, "0g");
       params = {
         tokenIn: BTC_ADDRESS,
         tokenOut: USDT_ADDRESS,
@@ -502,7 +502,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "btcToEth") {
-      addLog(`0G: Memulai Swap BTC ➯ ETH Dengan amount: ${ethers.formatUnits(amountIn, 18)} BTC`, "0g");
+      addLog(`0G: Memulai Swap BTC ➯ ETH Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} BTC`, "0g");
       params = {
         tokenIn: BTC_ADDRESS,
         tokenOut: ETH_ADDRESS,
@@ -514,7 +514,7 @@ async function swapAuto(direction, amountIn) {
         sqrtPriceLimitX96: 0n,
       };
     } else if (direction === "ethToBtc") {
-      addLog(`0G: Memulai Swap ETH ➯ BTC Dengan amount: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
+      addLog(`0G: Memulai Swap ETH ➯ BTC Dengan Jumlah: ${ethers.formatUnits(amountIn, 18)} ETH`, "0g");
       params = {
         tokenIn: ETH_ADDRESS,
         tokenOut: BTC_ADDRESS,
