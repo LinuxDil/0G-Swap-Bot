@@ -548,7 +548,7 @@ async function swapAuto(direction, amountIn) {
     throw error;
   }
 }
-
+// Fungsi swap usdt ke eth
 async function autoSwapUsdtEth(totalSwaps) {
   try {
     for (let i = 1; i <= totalSwaps; i++) {
@@ -1016,11 +1016,11 @@ function startTransactionProcess(pair, totalSwaps) {
     } else if (pair === "BTC ke ETH") {
       autoSwapBtcEth(totalSwaps);
     } else if (pair === "ETH ke USDT") {
-      autoSwapUsdtBtc(totalSwaps);
+      autoSwapEthUsdt(totalSwaps);
     } else if (pair === "BTC ke USDT") {
-      autoSwapBtcEth(totalSwaps);
+      autoSwapBtcUsdt(totalSwaps);
     } else if (pair === "ETH ke BTC") {
-      autoSwapBtcEth(totalSwaps);
+      autoSwapEthBtc(totalSwaps);
     } else {
       addLog(`Logika swap untuk pasangan ${pair} belum diimplementasikan.`, "error");
       stopTransaction();
