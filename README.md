@@ -1,5 +1,5 @@
 # 0G-Swap-Bot
-This script for automation your 0G swap via Zer0 
+This script for automation your 0G swap via Zer0 !
 Join our Channel for Run the Script, and more information about Airdrop
 
 <div align="center">
